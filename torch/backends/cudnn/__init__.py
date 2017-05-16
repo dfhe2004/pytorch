@@ -5,7 +5,7 @@ import warnings
 
 enabled = True  # set to False to globally disable cuDNN
 
-lib = None
+lib = ctypes.cdll.LoadLibrary('cudnn64_5')
 __cudnn_version = None
 # TODO: dynamic version checks via cudnnGetVersion
 

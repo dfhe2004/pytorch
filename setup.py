@@ -75,6 +75,7 @@ class build_deps(Command):
 
     def run(self):
         from tools.nnwrap import generate_wrappers as generate_nn_wrappers
+        '''
         if platform.system() == 'Windows':
             build_all_cmd = ['torch\\lib\\build_all.bat']
         else:
@@ -87,6 +88,7 @@ class build_deps(Command):
             build_all_cmd += ['--with-distributed']
         # if subprocess.call(build_all_cmd) != 0:
         #     sys.exit(1)
+        '''
         generate_nn_wrappers()
 
 
@@ -264,7 +266,8 @@ if platform.system() == 'Windows':
     THNN_LIB = os.path.join(lib_path, 'THNN.lib')
     THCUNN_LIB = os.path.join(lib_path, 'THCUNN.lib')
     THPP_LIB = os.path.join(lib_path, 'THPP.lib')
-    _C_LIB = 'build/temp.win-amd64-' + str(sys.version_info[0]) + '.' + str(sys.version_info[1]) + '/Release/torch/csrc/_C.cp' + str(sys.version_info[0]) + str(sys.version_info[1]) + '-win_amd64.lib'
+    #_C_LIB = 'build/temp.win-amd64-' + str(sys.version_info[0]) + '.' + str(sys.version_info[1]) + '/Release/torch/csrc/_C.cp' + str(sys.version_info[0]) + str(sys.version_info[1]) + '-win_amd64.lib'
+    _C_LIB = 'build/temp.win-amd64-' + str(sys.version_info[0]) + '.' + str(sys.version_info[1]) + '/Release/torch/csrc/_C.lib'
 
 if platform.system() != 'Windows' and WITH_NCCL and subprocess.call('ldconfig -p | grep libnccl >/dev/null', shell=True) == 0:
     SYSTEM_NCCL = True
@@ -450,7 +453,7 @@ if os.getenv('PYTORCH_BUILD_VERSION'):
         + '_' + os.getenv('PYTORCH_BUILD_NUMBER')
 else:
     try:
-        sha = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=cwd).decode('ascii').strip()
+        sha = subprocess.check_output([r'D:\Program Files (x86)\Git\bin\git', 'rev-parse', 'HEAD'], cwd=cwd).decode('ascii').strip()
         version += '+' + sha[:7]
     except subprocess.CalledProcessError:
         pass

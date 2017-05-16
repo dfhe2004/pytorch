@@ -35,7 +35,7 @@ def _sleep(cycles):
 
 def _load_cudart():
     # First check the main program for CUDA symbols
-    lib = ctypes.cdll.LoadLibrary(None)
+    lib = ctypes.cdll.LoadLibrary('cudart64_80')
     if hasattr(lib, 'cudaGetErrorName'):
         return lib
 
